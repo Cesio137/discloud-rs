@@ -28,13 +28,32 @@ pub struct AppResponseUnique {
 }
 
 #[derive(Deserialize, Debug, Clone)]
+pub struct LastCommit {
+    pub message: String,
+    pub sha: String,
+}
+
+#[derive(Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct SyncGit {
+    pub auto_deploy: bool,
+    #[serde(rename = "repositoryID")]
+    pub repository_id: u64,
+    pub branch_name: String,
+    pub last_commit: LastCommit
+}
+
+#[derive(Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct App {
     pub auto_deploy_git: String,
     pub auto_restart: bool,
     #[serde(rename = "avatarURL")]
     pub avatar_url: String,
+    pub added_at_timestamp: u64,
+    pub cluster_name: String,
     pub exit_code: Option<i32>,
+    pub apts: Vec<String>,
     pub id: String,
     pub lang: String,
     pub main_file: String,
@@ -43,6 +62,7 @@ pub struct App {
     pub online: bool,
     pub ram: i32,
     pub ram_killed: bool,
+    pub sync_git: Option<SyncGit>,
     pub r#type: i32,
 }
 
